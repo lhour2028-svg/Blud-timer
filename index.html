@@ -4,31 +4,54 @@
   <title>Ziddianthe Blud Timer</title>
   <style>
     body {
-      background: #020617;
-      color: white;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
       font-family: Arial, sans-serif;
-      text-align: center;
-      padding-top: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      background: linear-gradient(270deg, #020617, #0f172a, #020617);
+      background-size: 600% 600%;
+      animation: gradientAnimation 15s ease infinite;
+      color: #fff;
+      overflow: hidden;
+    }
+
+    @keyframes gradientAnimation {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
     }
 
     h1 {
-      font-size: 40px;
+      font-size: 50px;
       margin-bottom: 40px;
+      color: #ff4d6d;
+      text-shadow: 0 0 10px #ff4d6d, 0 0 20px #ff4d6d;
+      animation: glow 2s infinite alternate;
+    }
+
+    @keyframes glow {
+      from {text-shadow: 0 0 5px #ff4d6d, 0 0 10px #ff4d6d;}
+      to {text-shadow: 0 0 20px #ff4d6d, 0 0 40px #ff4d6d;}
     }
 
     #timer {
-      font-size: 30px;
-      background: #0f172a;
+      font-size: 35px;
+      background: rgba(15, 23, 42, 0.7);
       display: inline-block;
-      padding: 20px 40px;
-      border-radius: 15px;
+      padding: 30px 60px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px #ff4d6d, 0 0 40px #ff4d6d;
+      color: #fff;
+      animation: pulse 2s infinite alternate;
     }
 
-    #milestoneMessage {
-      margin-top: 20px;
-      font-size: 24px;
-      color: #ffcc00;
-      font-weight: bold;
+    @keyframes pulse {
+      from {box-shadow: 0 0 10px #ff4d6d, 0 0 20px #ff4d6d;}
+      to {box-shadow: 0 0 25px #ff4d6d, 0 0 50px #ff4d6d;}
     }
   </style>
 </head>
@@ -37,14 +60,9 @@
   <h1>⏱ Ziddianthe Blud Timer</h1>
 
   <div id="timer">Loading...</div>
-  <div id="milestoneMessage"></div>
 
   <script>
-    // START DATE: Jan 31, 2026 at 5:43 PM
     const startDate = new Date("2026-01-31T17:43:00");
-
-    // Track which milestone days have been shown
-    let milestoneShown = [];
 
     function updateTimer() {
       const now = new Date();
@@ -56,28 +74,7 @@
       const seconds = Math.floor((diff / 1000) % 60);
 
       document.getElementById("timer").innerHTML =
-        days + " days " +
-        hours + " hours " +
-        minutes + " minutes " +
-        seconds + " seconds";
-
-      // Milestone messages every 10 days unless special effect
-      const specialDays = [55, 100, 200]; // add any other special days here
-      let message = "";
-
-      if (!specialDays.includes(days) && days !== 0 && days % 10 === 0) {
-        // Only show once per milestone day
-        if (!milestoneShown.includes(days)) {
-          milestoneShown.push(days);
-        }
-      }
-
-      // Display the milestone message if today is a milestone
-      if (milestoneShown.includes(days)) {
-        message = "🎉 Day " + days + " milestone! Keep going!";
-      }
-
-      document.getElementById("milestoneMessage").innerHTML = message;
+        days + " days " + hours + " hours " + minutes + " minutes " + seconds + " seconds";
     }
 
     setInterval(updateTimer, 1000);
@@ -86,3 +83,4 @@
 
 </body>
 </html>
+
