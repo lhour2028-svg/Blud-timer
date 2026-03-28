@@ -6,85 +6,108 @@
     body {
       margin: 0;
       padding: 0;
+      height: 100vh;
       font-family: Arial, sans-serif;
       display: flex;
-      flex-direction: column;
+      justify-content: center;
       align-items: center;
+      flex-direction: column;
       background: linear-gradient(270deg, #020617, #0f172a, #020617);
       background-size: 600% 600%;
       animation: gradientAnimation 15s ease infinite;
       color: #fff;
-      min-height: 100vh;
+      overflow: hidden;
     }
+
     @keyframes gradientAnimation {
-      0% {background-position:0% 50%;}
-      50% {background-position:100% 50%;}
-      100% {background-position:0% 50%;}
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
     }
+
     nav {
-      margin: 20px 0;
+      margin-bottom: 20px;
     }
+
     nav a {
-      color: #ff4d6d;
+      color: #ffffff;
       text-decoration: none;
-      margin: 0 15px;
       font-weight: bold;
-      text-shadow: 0 0 5px #ff4d6d;
+      margin: 0 15px;
+      text-shadow: 0 0 5px #ffff66;
     }
-    nav a:hover { text-shadow:0 0 15px #ff4d6d; }
+
+    nav a:hover {
+      text-shadow: 0 0 10px #ffff66, 0 0 20px #ffff66;
+    }
+
     h1 {
       font-size: 50px;
-      margin: 20px 0;
-      color: #ff4d6d;
-      text-shadow: 0 0 10px #ff4d6d, 0 0 20px #ff4d6d;
+      margin-bottom: 40px;
+      color: #ffffff;
+      text-shadow: 0 0 10px #ffff66, 0 0 20px #ffff66;
       animation: glow 2s infinite alternate;
     }
+
     @keyframes glow {
-      from {text-shadow: 0 0 5px #ff4d6d,0 0 10px #ff4d6d;}
-      to {text-shadow:0 0 20px #ff4d6d,0 0 40px #ff4d6d;}
+      from {text-shadow: 0 0 5px #ffff66, 0 0 10px #ffff66;}
+      to {text-shadow: 0 0 20px #ffff66, 0 0 40px #ffff66;}
     }
+
     #timer {
       font-size: 35px;
-      background: rgba(15,23,42,0.7);
+      background: rgba(15, 23, 42, 0.7);
+      display: inline-block;
       padding: 30px 60px;
       border-radius: 20px;
-      box-shadow:0 0 20px #ff4d6d,0 0 40px #ff4d6d;
+      box-shadow: 0 0 20px #ffff66, 0 0 40px #ffff66;
+      color: #ffffff;
       animation: pulse 2s infinite alternate;
-      margin-bottom: 20px;
-      text-align: center;
     }
+
     @keyframes pulse {
-      from {box-shadow:0 0 10px #ff4d6d,0 0 20px #ff4d6d;}
-      to {box-shadow:0 0 25px #ff4d6d,0 0 50px #ff4d6d;}
+      from {box-shadow: 0 0 10px #ffff66, 0 0 20px #ffff66;}
+      to {box-shadow: 0 0 25px #ffff66, 0 0 50px #ffff66;}
     }
   </style>
 </head>
 <body>
 
   <nav>
-    <a href="index.html">Blud Timer</a> | 
-    <a href="milestones.html">Milestones</a> | 
+    <a href="index.html">Blud Timer</a> |
+    <a href="milestones.html">Milestones</a> |
     <a href="jallen.html">Jallen Racing</a>
   </nav>
 
   <h1>⏱ Ziddianthe Blud Timer</h1>
+
   <div id="timer">Loading...</div>
 
   <script>
-    const startDate = new Date("2025-03-26T00:00:00"); // exact date last year
+    // Correct start date (31 Jan 2026, 17:43)
+    const startDate = new Date("2026-01-31T17:43:00");
+
     function updateTimer() {
       const now = new Date();
       const diff = now - startDate;
-      const days = Math.floor(diff / (1000*60*60*24));
-      const hours = Math.floor((diff/(1000*60*60))%24);
-      const minutes = Math.floor((diff/(1000*60))%60);
-      const seconds = Math.floor((diff/1000)%60);
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
       const milliseconds = diff % 1000;
+
       document.getElementById("timer").innerHTML =
-        days + " days " + hours + " hours " + minutes + " minutes " + seconds + " seconds " + milliseconds + " ms";
+        days + " days " +
+        hours + " hours " +
+        minutes + " minutes " +
+        seconds + " seconds " +
+        milliseconds + " ms";
     }
-    setInterval(updateTimer, 10);
+
+    setInterval(updateTimer, 10); // updates every 10ms
     updateTimer();
   </script>
+
 </body>
 </html>
