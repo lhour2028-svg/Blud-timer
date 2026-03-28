@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ziddianthe Blud Milestones</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #020617;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 50px;
+    }
+
+    nav {
+      margin-bottom: 40px;
+    }
+
+    nav a {
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: bold;
+      margin: 0 15px;
+      text-shadow: 0 0 5px #ffff66;
+    }
+
+    nav a:hover {
+      text-shadow: 0 0 10px #ffff66, 0 0 20px #ffff66;
+    }
+
+    h1 {
+      font-size: 45px;
+      color: #ffffff;
+      text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00;
+      margin-bottom: 30px;
+    }
+
+    .milestone {
+      font-size: 30px;
+      margin: 15px 0;
+      padding: 15px 30px;
+      border-radius: 15px;
+      background: rgba(0, 50, 0, 0.5);
+      box-shadow: 0 0 15px #00ff00;
+      width: 400px;
+      text-align: center;
+    }
+
+    .done {
+      background: rgba(0, 100, 0, 0.7);
+      box-shadow: 0 0 20px #00ff00;
+    }
+
+    .countdown {
+      font-size: 20px;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html">Blud Timer</a> |
+    <a href="milestones.html">Milestones</a> |
+    <a href="jallen.html">Jallen Racing</a>
+  </nav>
+
+  <h1>Milestones</h1>
+
+  <div class="milestone" id="day100">100 days</div>
+  <div class="milestone" id="day150">150 days</div>
+  <div class="milestone" id="day200">200 days</div>
+  <div class="milestone" id="anniversary">1 Year Anniversary</div>
+
+  <script>
+    const milestones = [
+      { id: "day100", date: new Date("2026-05-10T17:43:00") },
+      { id: "day150", date: new Date("2026-06-29T17:43:00") },
+      { id: "day200", date: new Date("2026-08-18T17:43:00") },
+      { id: "anniversary", date: new Date("2027-01-31T17:43:00") }
+    ];
+
+    function updateMilestones() {
+      const now = new Date();
+      milestones.forEach(m => {
+        const diff = m.date - now;
+        const el = document.getElementById(m.id);
+
+        if (diff <= 0) {
+          el.classList.add("done");
+          el.innerHTML = el.innerHTML + " ✅ Done!";
+        } else {
+          const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+          const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+          const minutes = Math.floor((diff / (1000 * 60)) % 60);
+          const seconds = Math.floor((diff / 1000) % 60);
+          el.querySelector(".countdown")?.remove();
+          const countdown = document.createElement("div");
+          countdown.className = "countdown";
+          countdown.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+          el.appendChild(countdown);
+        }
+      });
+    }
+
+    setInterval(updateMilestones, 1000);
+    updateMilestones();
+  </script>
+
+</body>
+</html>
