@@ -1,33 +1,132 @@
-const startDate = new Date("2026-01-31T17:43:00");
-const milestones = [
-  { name: "Day 100", daysAfterStart: 100 },
-  { name: "Day 150", daysAfterStart: 150 },
-  { name: "Day 200", daysAfterStart: 200 },
-  { name: "Anniversary", daysAfterStart: 365 }
-];
-
-function updateMilestones() {
-  const now = new Date();
-
-  milestones.forEach(m => {
-    const milestoneDate = new Date(startDate.getTime() + m.daysAfterStart*24*60*60*1000);
-    const diff = milestoneDate - now;
-
-    const el = document.getElementById(m.name.replace(" ", "_"));
-
-    if (!el) return;
-
-    if (diff <= 0) {
-      el.innerHTML = m.name + " ✅ Done!";
-    } else {
-      const days = Math.floor(diff / (1000*60*60*24));
-      const hours = Math.floor((diff / (1000*60*60)) % 24);
-      const minutes = Math.floor((diff / (1000*60)) % 60);
-      const seconds = Math.floor((diff / 1000) % 60);
-      el.innerHTML = `${m.name}: ${days}d ${hours}h ${minutes}m ${seconds}s`;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ziddianthe Blud Timer - Milestones</title>
+  <style>
+    /* Body & background */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(270deg, #020617, #0f172a, #020617);
+      background-size: 600% 600%;
+      animation: gradientAnimation 15s ease infinite;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
     }
-  });
-}
 
-setInterval(updateMilestones, 1000);
-updateMilestones();
+    @keyframes gradientAnimation {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+
+    /* Menu bar */
+    nav {
+      width: 100%;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      justify-content: center;
+      padding: 15px 0;
+      margin-bottom: 50px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 30px;
+      font-size: 18px;
+      position: relative;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: #00ff00;
+      text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00;
+    }
+
+    h1 {
+      font-size: 50px;
+      color: #00ff00;
+      text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00;
+      margin-bottom: 50px;
+    }
+
+    .milestone {
+      font-size: 28px;
+      background: rgba(15,23,42,0.7);
+      padding: 20px 40px;
+      border-radius: 15px;
+      margin: 15px 0;
+      box-shadow: 0 0 15px #00ff00, 0 0 30px #00ff00;
+      width: 300px;
+      text-align: center;
+    }
+
+    .milestone.done {
+      opacity: 0.7;
+      text-decoration: line-through;
+      box-shadow: 0 0 10px #00ff00;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Menu Bar -->
+  <nav>
+    <a href="index.html">Blud Timer</a>
+    <a href="milestones.html">Milestones</a>
+    <a href="jallen.html">Jallen Racing</a>
+  </nav>
+
+  <h1>📅 Ziddianthe Blud Milestones</h1>
+
+  <!-- Milestones -->
+  <div id="Day_100" class="milestone">Day 100</div>
+  <div id="Day_150" class="milestone">Day 150</div>
+  <div id="Day_200" class="milestone">Day 200</div>
+  <div id="Anniversary" class="milestone">1-Year Anniversary</div>
+
+  <script>
+    const startDate = new Date("2026-01-31T17:43:00"); // timer start
+    const milestones = [
+      { name: "Day 100", days: 100 },
+      { name: "Day 150", days: 150 },
+      { name: "Day 200", days: 200 },
+      { name: "Anniversary", days: 365 }
+    ];
+
+    function updateMilestones() {
+      const now = new Date();
+
+      milestones.forEach(m => {
+        const milestoneDate = new Date(startDate.getTime() + m.days*24*60*60*1000);
+        const diff = milestoneDate - now;
+        const el = document.getElementById(m.name.replace(" ", "_"));
+
+        if (!el) return;
+
+        if (diff <= 0) {
+          el.innerHTML = `${m.name}: ✅ Done!`;
+          el.classList.add("done");
+        } else {
+          const days = Math.floor(diff / (1000*60*60*24));
+          const hours = Math.floor((diff / (1000*60*60)) % 24);
+          const minutes = Math.floor((diff / (1000*60)) % 60);
+          const seconds = Math.floor((diff / 1000) % 60);
+
+          el.innerHTML = `${m.name}: ${days}d ${hours}h ${minutes}m ${seconds}s`;
+        }
+      });
+    }
+
+    setInterval(updateMilestones, 1000);
+    updateMilestones();
+  </script>
+</body>
+</html>
