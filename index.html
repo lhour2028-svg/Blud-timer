@@ -23,6 +23,13 @@
       padding: 20px 40px;
       border-radius: 15px;
     }
+
+    #milestoneMessage {
+      margin-top: 20px;
+      font-size: 24px;
+      color: #ffcc00;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -30,11 +37,15 @@
   <h1>⏱ Ziddianthe Blud Timer</h1>
 
   <div id="timer">Loading...</div>
+  <div id="milestoneMessage"></div>
 
   <script>
-    // START DATE: Jan 30, 2026
-const startDate = new Date("2026-01-31T17:43:00");
-    
+    // START DATE: Jan 31, 2026 at 5:43 PM
+    const startDate = new Date("2026-01-31T17:43:00");
+
+    // Track which milestone days have been shown
+    let milestoneShown = [];
+
     function updateTimer() {
       const now = new Date();
       const diff = now - startDate;
@@ -49,6 +60,24 @@ const startDate = new Date("2026-01-31T17:43:00");
         hours + " hours " +
         minutes + " minutes " +
         seconds + " seconds";
+
+      // Milestone messages every 10 days unless special effect
+      const specialDays = [55, 100, 200]; // add any other special days here
+      let message = "";
+
+      if (!specialDays.includes(days) && days !== 0 && days % 10 === 0) {
+        // Only show once per milestone day
+        if (!milestoneShown.includes(days)) {
+          milestoneShown.push(days);
+        }
+      }
+
+      // Display the milestone message if today is a milestone
+      if (milestoneShown.includes(days)) {
+        message = "🎉 Day " + days + " milestone! Keep going!";
+      }
+
+      document.getElementById("milestoneMessage").innerHTML = message;
     }
 
     setInterval(updateTimer, 1000);
