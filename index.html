@@ -38,29 +38,20 @@
       to {text-shadow: 0 0 20px #ff4d6d, 0 0 40px #ff4d6d;}
     }
 
-    .timer-box {
+    #timer {
       font-size: 35px;
       background: rgba(15, 23, 42, 0.7);
       display: inline-block;
-      padding: 20px 50px;
+      padding: 30px 60px;
       border-radius: 20px;
       box-shadow: 0 0 20px #ff4d6d, 0 0 40px #ff4d6d;
       color: #fff;
-      margin-bottom: 20px;
       animation: pulse 2s infinite alternate;
-      text-align: center;
     }
 
     @keyframes pulse {
       from {box-shadow: 0 0 10px #ff4d6d, 0 0 20px #ff4d6d;}
       to {box-shadow: 0 0 25px #ff4d6d, 0 0 50px #ff4d6d;}
-    }
-
-    .sub-timer {
-      font-size: 25px;
-      margin: 5px 0;
-      color: #ffd700;
-      text-shadow: 0 0 5px #ffd700, 0 0 10px #ffd700;
     }
   </style>
 </head>
@@ -68,17 +59,10 @@
 
   <h1>⏱ Ziddianthe Blud Timer</h1>
 
-  <div class="timer-box" id="mainTimer">Loading...</div>
-
-  <div class="sub-timer" id="daysUntil100"></div>
-  <div class="sub-timer" id="daysUntil200"></div>
-  <div class="sub-timer" id="daysUntilAnniversary"></div>
+  <div id="timer">Loading...</div>
 
   <script>
     const startDate = new Date("2026-01-31T17:43:00");
-
-    // Anniversary date example (replace with your real anniversary)
-    const anniversaryDate = new Date("2026-06-15T00:00:00");
 
     function updateTimer() {
       const now = new Date();
@@ -88,28 +72,17 @@
       const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
       const minutes = Math.floor((diff / (1000 * 60)) % 60);
       const seconds = Math.floor((diff / 1000) % 60);
+      const milliseconds = diff % 1000;
 
-      document.getElementById("mainTimer").innerHTML =
-        days + " days " + hours + " hours " + minutes + " minutes " + seconds + " seconds";
-
-      // Countdown to 100 days
-      const daysUntil100 = 100 - days;
-      document.getElementById("daysUntil100").innerHTML =
-        daysUntil100 > 0 ? "Days until 100: " + daysUntil100 : "100 days reached! 🎉";
-
-      // Countdown to 200 days
-      const daysUntil200 = 200 - days;
-      document.getElementById("daysUntil200").innerHTML =
-        daysUntil200 > 0 ? "Days until 200: " + daysUntil200 : "200 days reached! 🔥";
-
-      // Countdown to anniversary
-      const diffAnniversary = anniversaryDate - now;
-      const daysToAnniversary = Math.ceil(diffAnniversary / (1000 * 60 * 60 * 24));
-      document.getElementById("daysUntilAnniversary").innerHTML =
-        daysToAnniversary > 0 ? "Days until anniversary: " + daysToAnniversary : "Happy Anniversary! ❤️";
+      document.getElementById("timer").innerHTML =
+        days + " days " +
+        hours + " hours " +
+        minutes + " minutes " +
+        seconds + " seconds " +
+        milliseconds + " ms";
     }
 
-    setInterval(updateTimer, 1000);
+    setInterval(updateTimer, 10); // update every 10ms for smooth milliseconds
     updateTimer();
   </script>
 
